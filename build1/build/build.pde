@@ -22,7 +22,7 @@ void settings() {
 
 void setup() {
 
-  //These settings are mapped to Novation Launch Control 
+  / // Mapped to Novation Launch Control Mini
     MidiBus.list();
     //                  (parent, In, Out)
     myBus = new MidiBus(this, 1, 2);
