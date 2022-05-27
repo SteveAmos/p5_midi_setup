@@ -1,8 +1,8 @@
-/* Setup file for using midi controllers with Processing
-Use file to map channels, buttons and knobs of connected midi devices
-
+/* Use file to test midi controller- Button test
+Switch case will change background colors with press of button
 Author: Steve Amos
 Created: May 27, 2022 | Updated:
+
 Based on code examples shared by Joshua Davis via Discord/ Patreon */
 
 //****************************************************************************
@@ -11,8 +11,11 @@ int stageHeight = 900;
 color bgColor = #101010;
 
 //****************************************************************************
+
 import themidibus.*;
 MidiBus myBus;
+
+color curMidiColor = 0;
 
 //****************************************************************************
 
@@ -21,29 +24,26 @@ void settings() {
 }
 
 void setup() {
-
-  //These settings are mapped to Novation Launch Control 
+  // Mapped to Novation Launch Control Mini
     MidiBus.list();
-    //                  (parent, In, Out)
     myBus = new MidiBus(this, 1, 2);
 }
 
 void draw() {
-  background(bgColor);
+  switch(curMidiColor){
+    case 9 : background(#FFFF00); break;
+    case 10 : background(#FF00FF); break;
+    case 11 : background(#00FFFF); break;
+    case 12 : background(#FF3300); break;
+    default : background(bgColor); break;
+  } 
 }
 
 //****************************************************************************
 
 void noteOn(int channel, int pitch, int velocity) {
   println("noteOn", channel, pitch, velocity);
+  curMidiColor = pitch;
 }
 
-//void noteOff(int channel, int pitch, int velocity){
-//  println("noteOff", channel, pitch, velocity);
-//}
-
-void controllerChange(ControlChange change){
-  println("controllerChange", change.channel(), change.number(), change.value());
-
-}
 //****************************************************************************
